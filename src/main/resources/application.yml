@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dijonevents
+    username: ${DB_USERNAME:dijon}
+    password: ${DB_PASSWORD:dijon}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET:dijon-events-secret-key-change-in-production-min-256-bits}
+  expiration: 86400000 # 24h en ms
+
+openagenda:
+  api-key: ${OPENAGENDA_API_KEY:your_api_key_here}
+  base-url: https://api.openagenda.com/v2
+  dijon-uid: ${OPENAGENDA_DIJON_UID:your_agenda_uid_here}
+
+logging:
+  level:
+    com.adrianmalmierca: DEBUG

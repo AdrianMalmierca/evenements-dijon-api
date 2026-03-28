@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dijon-events-db
+    environment:
+      POSTGRES_DB: dijonevents
+      POSTGRES_USER: ${DB_USERNAME:-dijon}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-dijon}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-dijon} -d dijonevents"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dijon-events-backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_USERNAME: ${DB_USERNAME:-dijon}
+      DB_PASSWORD: ${DB_PASSWORD:-dijon}
+      JWT_SECRET: ${JWT_SECRET}
+      OPENAGENDA_API_KEY: ${OPENAGENDA_API_KEY}
+      OPENAGENDA_DIJON_UID: ${OPENAGENDA_DIJON_UID}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/dijonevents
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  postgres_data:
