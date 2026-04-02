@@ -27,7 +27,7 @@ class OpenAgendaClient(
                     .queryParam("size", size)
                     .queryParam("from", from)
                     //optional
-                    .apply { keyword?.let { queryParam("search[keyword]", it) } }
+                    .apply { keyword?.let { queryParam("search", it) } }
                     .build(dijonUid)
             }
             .retrieve() //execute request
@@ -39,7 +39,9 @@ class OpenAgendaClient(
                 uid = event.uid.toString(),
                 title = event.title["fr"] ?: event.title.values.firstOrNull() ?: "Sans titre",
                 description = event.description?.get("fr"),
-                imageUrl = event.image?.base,
+                imageUrl = event.image?.filename?.let {
+                    "https://cdn.openagenda.com/main/$it"
+                },
                 locationName = event.location?.name,
                 address = event.location?.address,
                 city = event.location?.city,

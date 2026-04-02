@@ -31,6 +31,7 @@ class SecurityConfig( //Global security config
             .authorizeHttpRequests {
                 it
                     .requestMatchers("/api/auth/**").permitAll() //public
+                    .requestMatchers("/api/events").permitAll()
                     .requestMatchers("/api/events/**").permitAll() //public events
                     .anyRequest().authenticated()
             }

@@ -41,7 +41,8 @@ data class OpenAgendaEvent(
 )
 
 data class OpenAgendaImage(
-    val base: String?
+    val base: String?,
+    val filename: String?
 )
 
 data class OpenAgendaLocation(

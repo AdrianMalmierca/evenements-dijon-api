@@ -68,7 +68,7 @@ class EventService(
 
     fun removeFavorite(email: String, eventUid: String) {
         val user = userRepository.findByEmail(email)
-            .orElseThrow { UsernameNotFoundException("Usuario no encontrado") }
+            .orElseThrow { UsernameNotFoundException("User not found") }
 
         user.favorites.removeIf { it.openAgendaUid == eventUid }
         userRepository.save(user)
