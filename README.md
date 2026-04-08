@@ -22,7 +22,7 @@ Spring Boot API  ──────►  OpenAgenda API (events)
   PostgreSQL (users, favourites)
 ```
 
-> See also: [dijon-events-android](https://github.com/AdrianMalmierca/evenements-dijon-api) — the native Android client for this API.
+> See also: [frontend-evenements-dijon-api](https://github.com/AdrianMalmierca/frontend-evenements-dijon-api) — the native Android client for this API.
 
 ---
 
@@ -124,7 +124,7 @@ dijon-events-backend/
 ```bash
 #Clone the repository
 git clone https://github.com/AdrianMalmierca/evenements-dijon-api
-cd dijon-events-api
+cd evenements-dijon-api
 
 #Set up environment variables
 cp .env.example .env
@@ -150,7 +150,7 @@ The API will be available at `http://localhost:8080`.
 ```env
 DB_USERNAME=dijon
 DB_PASSWORD=dijon
-JWT_SECRET=your-secret-min-32-chars   # openssl rand -base64 32
+JWT_SECRET=your-secret-min-32-chars   #openssl rand -base64 32
 OPENAGENDA_API_KEY=your_api_key
 OPENAGENDA_DIJON_UID=your_agenda_uid
 ```
