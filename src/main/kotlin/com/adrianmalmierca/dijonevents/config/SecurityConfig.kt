@@ -22,7 +22,7 @@ class SecurityConfig( //Global security config
 ) {
 
     //Define how HTTP security behaves.
-    @Bean
+    @Bean //bean to create and manage this object
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .csrf { it.disable() } //csrf protection

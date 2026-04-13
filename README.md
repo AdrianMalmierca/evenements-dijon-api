@@ -259,7 +259,7 @@ on:
 
 ### Medium Term
 - **Multiple agendas** — aggregate events from several Burgundy agendas (Les Docks Numériques, Opéra de Dijon, etc.)
-- **Push notifications** — notify users of upcoming favourited events via FCM
+- **Push notifications** — notify users of upcoming favourited events
 - **Filter by category** — allow filtering events by category (concert, exposition, sport...)
 
 ### Long Term

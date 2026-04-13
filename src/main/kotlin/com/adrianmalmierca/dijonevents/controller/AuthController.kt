@@ -8,7 +8,7 @@ import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@RestController
+@RestController //to serialize to JSON
 @RequestMapping("/api/auth")
 class AuthController(private val authService: AuthService) {
 

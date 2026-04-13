@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
 
-@Component
+@Component //so spring creates the object, is allowed dependency injection
 class JwtAuthFilter(
     private val jwtUtil: JwtUtil,
     private val userDetailsService: UserDetailsService
