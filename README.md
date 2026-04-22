@@ -10,6 +10,16 @@ Backend REST API for Dijon Événements — a mobile application that aggregates
 
 ---
 
+## Demo
+
+📱 [Download APK for Android](https://github.com/AdrianMalmierca/frontend-evenements-dijon-api/releases)
+
+**Advice:** The backend runs in Render so it takes around 60 seconds to start and after 15 minutes it sleeps again, so is normal if in the first run it takes time to log in or register.
+
+> Enable **Unknown sources** in Settings → Security before installing. 
+
+---
+
 ## Live Architecture
 
 ```
