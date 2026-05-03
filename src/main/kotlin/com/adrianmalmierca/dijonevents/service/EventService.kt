@@ -3,6 +3,7 @@ package com.adrianmalmierca.dijonevents.service
 import com.adrianmalmierca.dijonevents.client.OpenAgendaClient
 import com.adrianmalmierca.dijonevents.dto.EventDto
 import com.adrianmalmierca.dijonevents.dto.FavoriteRequest
+import com.adrianmalmierca.dijonevents.dto.PagedEventsResponse
 import com.adrianmalmierca.dijonevents.model.FavoriteEvent
 import com.adrianmalmierca.dijonevents.repository.FavoriteEventRepository
 import com.adrianmalmierca.dijonevents.repository.UserRepository
@@ -16,8 +17,14 @@ class EventService(
     private val favoriteEventRepository: FavoriteEventRepository
 ) {
 
-    fun getEvents(size: Int = 20, from: Int = 0, keyword: String? = null): List<EventDto> {
-        return openAgendaClient.getEvents(size, from, keyword)
+    fun getEvents(page: Int = 0, size: Int = 20, keyword: String? = null, category: String? = null): PagedEventsResponse {
+        val from = page * size
+        val (events, total) = openAgendaClient.getEvents(size, from, keyword, category)
+        return PagedEventsResponse(events = events,
+                                   total = total,
+                                   page = page,
+                                   size = size,
+                                   hasMore = from + events.size < total)
     }
 
     fun getEventById(uid: String): EventDto? {

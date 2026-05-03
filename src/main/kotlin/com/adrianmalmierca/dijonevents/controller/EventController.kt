@@ -2,6 +2,7 @@ package com.adrianmalmierca.dijonevents.controller
 
 import com.adrianmalmierca.dijonevents.dto.EventDto
 import com.adrianmalmierca.dijonevents.dto.FavoriteRequest
+import com.adrianmalmierca.dijonevents.dto.PagedEventsResponse
 import com.adrianmalmierca.dijonevents.service.EventService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -14,11 +15,12 @@ class EventController(private val eventService: EventService) {
 
     @GetMapping
     fun getEvents(
+        @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "20") size: Int,
-        @RequestParam(defaultValue = "0") from: Int,
-        @RequestParam(required = false) keyword: String?
-    ): ResponseEntity<List<EventDto>> {
-        return ResponseEntity.ok(eventService.getEvents(size, from, keyword))
+        @RequestParam(required = false) keyword: String?,
+        @RequestParam(required = false) category: String?
+    ): ResponseEntity<PagedEventsResponse> {
+        return ResponseEntity.ok(eventService.getEvents(page, size, keyword, category))
     }
 
     @GetMapping("/{uid}")

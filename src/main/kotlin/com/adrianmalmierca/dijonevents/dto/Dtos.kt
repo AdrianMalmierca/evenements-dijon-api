@@ -83,3 +83,12 @@ data class FavoriteRequest(
     val latitude: Double?,
     val longitude: Double?
 )
+
+//Pagination
+data class PagedEventsResponse(
+    val events: List<EventDto>,
+    val total: Int,
+    val page: Int,
+    val size: Int,
+    val hasMore: Boolean
+)

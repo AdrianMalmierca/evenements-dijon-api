@@ -263,14 +263,14 @@ on:
 ## Future Improvements
 
 ### Short Term
-- **Pagination** — add `page` and `size` parameters to the events endpoint for infinite scroll support in the app
+- ✅ **Pagination** — add `page` and `size` parameters to the events endpoint for infinite scroll support in the app
 - **Event caching** — cache OpenAgenda responses with a TTL to reduce external API calls
-- **Input validation** — add `@Valid` constraints on all request bodies
+- ✅ **Input validation** — add `@Valid` constraints on all request bodies
 
 ### Medium Term
 - **Multiple agendas** — aggregate events from several Burgundy agendas (Les Docks Numériques, Opéra de Dijon, etc.)
 - **Push notifications** — notify users of upcoming favourited events
-- **Filter by category** — allow filtering events by category (concert, exposition, sport...)
+- ✅ **Filter by category** — allow filtering events by category (concert, exposition, sport...)
 
 ### Long Term
 - **Deploy to Railway/Render** — live public URL for portfolio demonstrations

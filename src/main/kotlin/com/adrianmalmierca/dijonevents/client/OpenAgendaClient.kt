@@ -18,7 +18,7 @@ class OpenAgendaClient(
     @Value("\${openagenda.dijon-uid}")
     private lateinit var dijonUid: String
 
-    fun getEvents(size: Int = 20, from: Int = 0, keyword: String? = null): List<EventDto> {
+    fun getEvents(size: Int = 20, from: Int = 0, keyword: String? = null, category: String? = null): Pair<List<EventDto>, Int> {
         val response = openAgendaWebClient.get()
             .uri { builder ->
                 builder
@@ -26,22 +26,20 @@ class OpenAgendaClient(
                     .queryParam("key", apiKey)
                     .queryParam("size", size)
                     .queryParam("from", from)
-                    //optional
                     .apply { keyword?.let { queryParam("search", it) } }
+                    .apply { category?.let { queryParam("filters[keywords][]", it) } }
                     .build(dijonUid)
             }
-            .retrieve() //execute request
+            .retrieve()
             .bodyToMono(OpenAgendaResponse::class.java) //transform JSON into OpenAgendaResponse
-            .block() ?: return emptyList() //wait until have response, else, return emptyList
+            .block() ?: return Pair(emptyList(), 0) //wait until have response, else, return emptyList
 
-        return response.events.map { event ->
+        val events = response.events.map { event ->
             EventDto(
                 uid = event.uid.toString(),
                 title = event.title["fr"] ?: event.title.values.firstOrNull() ?: "Sans titre",
                 description = event.description?.get("fr"),
-                imageUrl = event.image?.filename?.let {
-                    "https://cdn.openagenda.com/main/$it"
-                },
+                imageUrl = event.image?.filename?.let { "https://cdn.openagenda.com/main/$it" },
                 locationName = event.location?.name,
                 address = event.location?.address,
                 city = event.location?.city,
@@ -52,9 +50,10 @@ class OpenAgendaClient(
                 categories = event.keywords?.get("fr") ?: emptyList()
             )
         }
+        return Pair(events, response.total)
     }
 
     fun getEventById(eventUid: String): EventDto? {
-        return getEvents(size = 100).find { it.uid == eventUid }
+        return getEvents(size = 100).first.find { it.uid == eventUid }
     }
 }
