@@ -17,10 +17,9 @@ class EventController(private val eventService: EventService) {
     fun getEvents(
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "20") size: Int,
-        @RequestParam(required = false) keyword: String?,
-        @RequestParam(required = false) category: String?
+        @RequestParam(required = false) keyword: String?
     ): ResponseEntity<PagedEventsResponse> {
-        return ResponseEntity.ok(eventService.getEvents(page, size, keyword, category))
+        return ResponseEntity.ok(eventService.getEvents(page, size, keyword))
     }
 
     @GetMapping("/{uid}")

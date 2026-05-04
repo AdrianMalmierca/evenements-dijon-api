@@ -9,6 +9,8 @@ import com.adrianmalmierca.dijonevents.repository.FavoriteEventRepository
 import com.adrianmalmierca.dijonevents.repository.UserRepository
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
+import org.springframework.cache.annotation.Cacheable
+import org.springframework.cache.annotation.CacheEvict
 
 @Service
 class EventService(
@@ -17,14 +19,18 @@ class EventService(
     private val favoriteEventRepository: FavoriteEventRepository
 ) {
 
-    fun getEvents(page: Int = 0, size: Int = 20, keyword: String? = null, category: String? = null): PagedEventsResponse {
+    //value is the caché name, key is the unique identifier for the cache entry, for example, 0-20-null, 1-20-music...
+    @Cacheable(value = ["events"], key = "#page + '-' + #size + '-' + (#keyword ?: 'null')")
+    fun getEvents(page: Int = 0, size: Int = 20, keyword: String? = null): PagedEventsResponse {
         val from = page * size
-        val (events, total) = openAgendaClient.getEvents(size, from, keyword, category)
-        return PagedEventsResponse(events = events,
-                                   total = total,
-                                   page = page,
-                                   size = size,
-                                   hasMore = from + events.size < total)
+        val (events, total) = openAgendaClient.getEvents(size, from, keyword)
+        return PagedEventsResponse(
+            events = events,
+            total = total,
+            page = page,
+            size = size,
+            hasMore = from + events.size < total
+        )
     }
 
     fun getEventById(uid: String): EventDto? {

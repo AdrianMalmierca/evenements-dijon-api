@@ -18,7 +18,7 @@ class OpenAgendaClient(
     @Value("\${openagenda.dijon-uid}")
     private lateinit var dijonUid: String
 
-    fun getEvents(size: Int = 20, from: Int = 0, keyword: String? = null, category: String? = null): Pair<List<EventDto>, Int> {
+    fun getEvents(size: Int = 20, from: Int = 0, keyword: String? = null): Pair<List<EventDto>, Int> {
         val response = openAgendaWebClient.get()
             .uri { builder ->
                 builder
@@ -27,7 +27,6 @@ class OpenAgendaClient(
                     .queryParam("size", size)
                     .queryParam("from", from)
                     .apply { keyword?.let { queryParam("search", it) } }
-                    .apply { category?.let { queryParam("filters[keywords][]", it) } }
                     .build(dijonUid)
             }
             .retrieve()

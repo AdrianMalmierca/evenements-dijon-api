@@ -268,12 +268,11 @@ on:
 - ✅ **Input validation** — add `@Valid` constraints on all request bodies
 
 ### Medium Term
-- **Multiple agendas** — aggregate events from several Burgundy agendas (Les Docks Numériques, Opéra de Dijon, etc.)
 - **Push notifications** — notify users of upcoming favourited events
 - ✅ **Filter by category** — allow filtering events by category (concert, exposition, sport...)
 
 ### Long Term
-- **Deploy to Railway/Render** — live public URL for portfolio demonstrations
+- ✅ **Deploy to Railway/Render** — live public URL for portfolio demonstrations
 - **Rate limiting** — protect the OpenAgenda proxy from abuse
 - **Integration tests** — Testcontainers for full end-to-end repository tests
 
