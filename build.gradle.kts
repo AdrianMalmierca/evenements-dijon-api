@@ -35,8 +35,16 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.8") //caché
+    implementation("org.springframework.boot:spring-boot-starter-cache")
 
     implementation("com.bucket4j:bucket4j-core:8.10.1") //for rate limiting
+
+    //tests
+    testImplementation("org.testcontainers:postgresql:1.19.8")
+    testImplementation("org.testcontainers:junit-jupiter:1.19.8")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+
+    implementation("com.google.firebase:firebase-admin:9.3.0") //notifications
 }
 
 tasks.withType<KotlinCompile> {

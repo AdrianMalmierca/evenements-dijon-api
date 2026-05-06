@@ -92,3 +92,7 @@ data class PagedEventsResponse(
     val size: Int,
     val hasMore: Boolean
 )
+
+data class FcmTokenRequest(
+    val token: String
+)

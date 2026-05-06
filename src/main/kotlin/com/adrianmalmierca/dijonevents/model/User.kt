@@ -18,6 +18,9 @@ data class User(
     @Column(nullable = false)
     val name: String,
 
+    @Column(nullable = true)
+    var fcmToken: String? = null,
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_favorites",

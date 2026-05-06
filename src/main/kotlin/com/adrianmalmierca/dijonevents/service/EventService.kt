@@ -16,7 +16,8 @@ import org.springframework.cache.annotation.CacheEvict
 class EventService(
     private val openAgendaClient: OpenAgendaClient,
     private val userRepository: UserRepository,
-    private val favoriteEventRepository: FavoriteEventRepository
+    private val favoriteEventRepository: FavoriteEventRepository,
+    private val notificationService: NotificationService
 ) {
 
     //value is the caché name, key is the unique identifier for the cache entry, for example, 0-20-null, 1-20-music...
@@ -72,6 +73,12 @@ class EventService(
                 latitude = request.latitude,
                 longitude = request.longitude
             )
+        )
+
+        notificationService.sendNotificationToUser(
+            email = email,
+            title = "Favori ajouté 🍷",
+            body = "«${request.title}» a été ajouté à vos favoris"
         )
 
         favoriteEventRepository.save(favorite)

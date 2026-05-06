@@ -2,8 +2,10 @@ package com.adrianmalmierca.dijonevents.controller
 
 import com.adrianmalmierca.dijonevents.dto.EventDto
 import com.adrianmalmierca.dijonevents.dto.FavoriteRequest
+import com.adrianmalmierca.dijonevents.dto.FcmTokenRequest
 import com.adrianmalmierca.dijonevents.dto.PagedEventsResponse
 import com.adrianmalmierca.dijonevents.service.EventService
+import com.adrianmalmierca.dijonevents.service.NotificationService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/events")
-class EventController(private val eventService: EventService) {
+class EventController(
+    private val eventService: EventService,
+    private val notificationService: NotificationService
+) {
 
     @GetMapping
     fun getEvents(
@@ -50,5 +55,14 @@ class EventController(private val eventService: EventService) {
     ): ResponseEntity<Void> {
         eventService.removeFavorite(user.username, eventUid)
         return ResponseEntity.noContent().build()
+    }
+
+    @PostMapping("/fcm-token")
+    fun updateFcmToken(
+        @AuthenticationPrincipal user: UserDetails,
+        @RequestBody request: FcmTokenRequest
+    ): ResponseEntity<Void> {
+        notificationService.updateFcmToken(user.username, request.token)
+        return ResponseEntity.ok().build()
     }
 }
