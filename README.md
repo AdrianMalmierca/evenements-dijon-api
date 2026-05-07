@@ -38,6 +38,10 @@ Spring Boot API  ──────►  OpenAgenda API (events)
   Firebase Admin SDK ──► FCM ──► Push Notifications
 ```
 
+### Architecture
+
+<img src="assets/architecture.svg" alt="Map detail" width="300"/>
+
 > See also: [frontend-evenements-dijon-api](https://github.com/AdrianMalmierca/frontend-evenements-dijon-api) — the native Android client for this API.
 
 ---
